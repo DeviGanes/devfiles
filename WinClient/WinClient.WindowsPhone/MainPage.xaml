@@ -1,0 +1,122 @@
+﻿<Page x:Class="WinClient.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:WinClient"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+      mc:Ignorable="d">
+
+    <Page.Resources>
+        <local:MobileServiceEndPointEnumConverter x:Key="MobileServiceEndPointEnumConverter" />
+        <local:LoginStatusConverter x:Key="LoginStatusConverter"></local:LoginStatusConverter>
+        <local:LoggedInLabelConverter x:Key="LoggedInLabelConverter"></local:LoggedInLabelConverter>
+    </Page.Resources>
+
+    <Grid x:Name="LayoutRoot">
+
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition />
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!--  Title Panel  -->
+        <StackPanel Grid.Row="0"
+                    Margin="19,0,0,0">
+            <TextBlock Margin="0,12,0,0"
+                       Style="{ThemeResource TitleTextBlockStyle}"
+                       Text="CSCI-E64 Mobile Service Client" />
+            <TextBlock Margin="0,-6.5,0,26.5"
+                       CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"
+                       Style="{ThemeResource HeaderTextBlockStyle}"
+                       Text="Authentication" />
+        </StackPanel>
+
+        <!--  TODO: Content should be placed within the following grid  -->
+        <Grid x:Name="ContentRoot"
+              Grid.Row="1"
+              Margin="19,9.5,19,0">
+            <StackPanel Orientation="Vertical">
+
+                <VariableSizedWrapGrid Orientation="Horizontal">
+                    <RadioButton HorizontalAlignment="Left"
+                                 Name="JavaScriptRadioButton"
+                                 VerticalAlignment="Top"
+                                 Content="JavaScript"
+                                 FontSize="20"
+                                 Foreground="DeepPink"
+                                 GroupName="MobileServiceChoice"
+                                 IsChecked="{Binding Path=MobileServiceEndpointChoice,
+                                                     Mode=TwoWay,
+                                                     Converter={StaticResource MobileServiceEndPointEnumConverter},
+                                                     ConverterParameter=JavaScript}" />
+                    <RadioButton HorizontalAlignment="Left" Name="DotNetRadioButton"
+                                 VerticalAlignment="Top"
+                                 Content=".NET"
+                                 FontSize="20"
+                                 Foreground="DeepSkyBlue"
+                                 GroupName="MobileServiceChoice"
+                                 IsChecked="{Binding Path=MobileServiceEndpointChoice,
+                                                     Mode=TwoWay,
+                                                     Converter={StaticResource MobileServiceEndPointEnumConverter},
+                                                     ConverterParameter=DotNet}" />
+                </VariableSizedWrapGrid>
+                <TextBlock HorizontalAlignment="Left"
+                           VerticalAlignment="Top"
+                           FontSize="20"
+                           Text="Result"
+                           TextWrapping="Wrap" />
+                <ProgressBar Name="progressBar"
+                             Height="8"
+                             Margin="0,10"
+                             Background="Transparent" />
+                <Border BorderBrush="Azure"
+                        BorderThickness="2"
+                        Padding="5,0,0,0">
+                    <TextBlock Name="OutTextBlock"
+                               Height="50"
+                               FontSize="20"
+                               Foreground="Yellow"
+                               TextWrapping="WrapWholeWords" />
+                </Border>
+                <Button Name="CallAPIGetButton"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Click="CallAPIGetButton_Click"
+                        Content="Call Custom API - HTTP GET" />
+                <Button x:Name="CallAPIPostButton"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Click="CallAPIPostButton_Click"
+                        Content="Call Custom API - HTTP POST" />
+                <Button x:Name="LoginLogoutButton"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Background="DarkRed"
+                        Click="LoginLogoutButton_Click"
+                        Content="Login" />
+            </StackPanel>
+            <StackPanel VerticalAlignment="Bottom"
+                        Orientation="Vertical">
+                <Border Name="StatusBorder"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Bottom">
+                    <TextBlock Name="StatusTextBlock"
+                               Height="30"
+                               Margin="10,0,0,0"
+                               HorizontalAlignment="Left"
+                               FontSize="15"
+                               Text="..."
+                               TextWrapping="Wrap" />
+                </Border>
+
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>
